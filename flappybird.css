@@ -1,1 +1,19 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin: 0;
+    background-color: skyblue; /* fallback if image doesn't cover whole screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#board {
+    background-image: url(./flappybirdbg.png);
+    background-size: cover;        /* Make image cover the canvas */
+    background-position: center;   /* Center the background image */
+    background-repeat: no-repeat;  /* Prevent image from repeating */
+    border: 2px solid black;
+}
 
