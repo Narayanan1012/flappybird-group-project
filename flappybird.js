@@ -39,7 +39,9 @@ window.onload = function() {
     birdImg.src = "./flappybird.png";
     topPipeImg.src = "./toppipe.png";
     bottomPipeImg.src = "./bottompipe.png";
-
+    birdImg.onload = function(){
+        ctx.drawImage(birdImg,bird.x,bird.y,bird.width,bird.height);
+    }
     // Start the game's animation loop. The 'update' function will now run continuously.
     requestAnimationFrame(update);
     setInterval(placePipes,1500);
