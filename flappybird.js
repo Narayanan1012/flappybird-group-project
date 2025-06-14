@@ -55,4 +55,4 @@ function update(){
 
     
     ctx.drawImage(birdImg,bird.x,bird.y,bird.width,bird.height);
-    
+}
