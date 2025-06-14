@@ -4,8 +4,7 @@
 // Set the game's dimensions
 const boardWidth = 360;
 const boardHeight = 640;
-canvas.width = boardWidth;
-canvas.height = boardHeight;
+
 //bird
 let birdHeight=24;
 let birdWidth=34;
