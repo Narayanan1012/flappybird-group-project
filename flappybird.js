@@ -34,6 +34,10 @@ const birdImg = new Image();
 const topPipeImg = new Image();
 const bottomPipeImg = new Image();
 
+// game
+let gameOver = false;
+let score = 0;
+
 window.onload = function () {
     canvas = document.getElementById("board");
     ctx = canvas.getContext("2d");
@@ -52,12 +56,18 @@ window.onload = function () {
     document.addEventListener("keydown", moveBird);
     document.addEventListener("touchstart", tmoveBird);
 
+    canvas.addEventListener("click", function(){
+        if(gameOver) restartGame();
+    });
+
     requestAnimationFrame(update);
 };
 
 function update() {
     requestAnimationFrame(update);
-
+    
+    if (gameOver) return;
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Bird movement
@@ -76,8 +86,34 @@ function update() {
         let pipe = pipeArray[i];
         pipe.x -= 2;
         ctx.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+
+        //Collision Detection
+        if (detectCollision(bird, pipe)){
+            gameOver = true;
+        }
+
+        if(!pipe.passed && pipe.img === bottomPipeImg && pipe.x + pipe.width < bird.x) {
+           pipe.passed = true;
+           score++;
+        }
     }
-    
+    //Game over message
+    if(bird.y + bird.height >= boardHeight || bird.y < 0){
+        gameOver = true;
+    }
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Score: " + score, 10, 40);
+
+    if(gameOver){
+        ctx.fillStyle = "red";
+        ctx.font = "40px Arial";
+        ctx.fillText("Game Over", 90, 250);
+        ctx.font = "20px Arial";
+        ctx.fillText("Click to Restart", 105, 290);
+    }
+        
 }
 
 // Bird jump
@@ -99,7 +135,8 @@ function placePipe() {
         x: boardWidth,
         y: randomPipeY,
         width: pipeWidth,
-        height: pipeHeight
+        height: pipeHeight,
+        passed: false
     };
 
     let bottomPipe = {
@@ -107,9 +144,30 @@ function placePipe() {
         x: boardWidth,
         y: randomPipeY + pipeHeight + pipeGap,
         width: pipeWidth,
-        height: pipeHeight
+        height: pipeHeight,
+        passed: false
     };
 
     pipeArray.push(topPipe);
     pipeArray.push(bottomPipe);
 }
+    
+//Detection Collision Function
+function detectCollision(a,b){
+        return(
+            a.x < b.x + b.width &&
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y + a.height > b.y
+        );
+}
+    
+// Restart Game
+function restartGame(){
+        bird.y = boardHeight / 2;
+        velocityY = 0;
+        pipeArray = [];
+        score = 0;
+         gameOver = false;
+}
+    
