@@ -20,7 +20,7 @@ let bird = {
 
 let velocityY = 0;
 let gravity = 0.2;
-let jumpPower = -8;
+let jumpPower = -6;
 
 // Pipes
 let pipeArray = [];
