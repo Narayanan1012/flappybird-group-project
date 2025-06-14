@@ -10,7 +10,8 @@ let birdHeight = 24;
 let birdWidth = 34;
 let birdX = boardWidth / 8;
 let birdY = boardHeight / 2;
-
+let birdImgs = []; //animation change
+let birdImgsIndex = 0;
 let bird = {
     x: birdX,
     y: birdY,
@@ -30,7 +31,7 @@ let pipeGap = 150;
 let pipeSpawnTimer = 0;
 
 // Images
-const birdImg = new Image();
+
 const topPipeImg = new Image();
 const bottomPipeImg = new Image();
 
@@ -45,13 +46,17 @@ window.onload = function () {
     canvas.width = boardWidth;
     canvas.height = boardHeight;
 
-    birdImg.src = "./flappybird.png";
+    //animation change
+    for(let i = 0; i < 4; i++){
+        let birdImg = new Image();
+        birdImg.src = `./flappybird${i}.png`;
+        birdImgs.push(birdImg);
+    }
+
     topPipeImg.src = "./toppipe.png";
     bottomPipeImg.src = "./bottompipe.png";
 
-    birdImg.onload = function () {
-        ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
-    };
+   
 
     document.addEventListener("keydown", moveBird);
     document.addEventListener("touchstart", tmoveBird);
@@ -61,7 +66,15 @@ window.onload = function () {
     });
 
     requestAnimationFrame(update);
+    setInterval(animateBird,100);
 };
+function animateBird(){
+    //animation
+    
+    
+    birdImgsIndex++;
+    birdImgsIndex %=4;  //to keep for only 4 images
+}
 
 function update() {
     requestAnimationFrame(update);
@@ -73,7 +86,7 @@ function update() {
     // Bird movement
     velocityY += gravity;
     bird.y += velocityY;
-    ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+    ctx.drawImage(birdImgs[birdImgsIndex],bird.x, bird.y, bird.width, bird.height); //animation change
 
     // Pipe logic
     pipeSpawnTimer++;
