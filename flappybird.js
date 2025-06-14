@@ -1,6 +1,5 @@
 // Get the canvas element from the HTML file
-const canvas = document.getElementById("board");
-const ctx = canvas.getContext("2d");
+
 
 // Set the game's dimensions
 const boardWidth = 360;
@@ -35,7 +34,8 @@ const bottomPipeImg = new Image();
 // It will run only after the entire HTML page has finished loading.
 window.onload = function() {
     // Tell the browser which image files to load
-    backgroundImg.src = "./flappybirdbg.png";
+    const canvas = document.getElementById("board");
+    const ctx = canvas.getContext("2d");
     birdImg.src = "./flappybird.png";
     topPipeImg.src = "./toppipe.png";
     bottomPipeImg.src = "./bottompipe.png";
@@ -44,7 +44,6 @@ window.onload = function() {
     }
     // Start the game's animation loop. The 'update' function will now run continuously.
     requestAnimationFrame(update);
-    setInterval(placePipes,1500);
     
 }
 function update(){
