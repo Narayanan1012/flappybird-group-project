@@ -1,6 +1,7 @@
 // Get the canvas element from the HTML file
 
-
+let ctx;
+let canvas;
 // Set the game's dimensions
 const boardWidth = 360;
 const boardHeight = 640;
@@ -24,7 +25,7 @@ let pipeX = boardwidth;
 let pipeY = 0;
 
 // Create Image objects to hold our pictures
-const backgroundImg = new Image();
+
 const birdImg = new Image();
 const topPipeImg = new Image();
 const bottomPipeImg = new Image();
@@ -33,8 +34,8 @@ const bottomPipeImg = new Image();
 // It will run only after the entire HTML page has finished loading.
 window.onload = function() {
     // Tell the browser which image files to load
-    const canvas = document.getElementById("board");
-    const ctx = canvas.getContext("2d");
+    canvas = document.getElementById("board");
+    ctx = canvas.getContext("2d");
     birdImg.src = "./flappybird.png";
     topPipeImg.src = "./toppipe.png";
     bottomPipeImg.src = "./bottompipe.png";
