@@ -47,3 +47,13 @@ window.onload = function() {
     setInterval(placePipes,1500);
     
 }
+function update(){
+
+
+    requestAnimationFrame(update);
+
+    ctx.clearRect(0,0,board.width,board.height);
+
+    
+    ctx.drawImage(birdImg,bird.x,bird.y,bird.width,bird.height);
+    
