@@ -37,6 +37,7 @@ const bottomPipeImg = new Image();
 
 // game
 let gameOver = false;
+let gameStarted = false;
 let score = 0;
 
 window.onload = function () {
@@ -79,9 +80,20 @@ function animateBird(){
 function update() {
     requestAnimationFrame(update);
     
-    if (gameOver) return;
+    if(!gameStarted){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(birdImgs[birdImgsIndex],bird.x, bird.y, bird.width, bird.height);
+        ctx.fillStyle = "red";
+        ctx.font = "30px Arial";
+        ctx.fillText("Press Space To Start", 40, 250);
+        return;
+    }
     
+    if (gameOver) return;
+   
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
 
     // Bird movement
     velocityY += gravity;
@@ -120,6 +132,7 @@ function update() {
     ctx.fillText("Score: " + score, 10, 40);
 
     if(gameOver){
+        ctx.drawImage(birdImgs[birdImgsIndex],bird.x, bird.y, bird.width, bird.height);
         ctx.fillStyle = "red";
         ctx.font = "40px Arial";
         ctx.fillText("Game Over", 90, 250);
@@ -132,15 +145,25 @@ function update() {
 // Bird jump
 function moveBird(e) {
     if (e.code == "Space" || e.code == "ArrowUp") {
+        if(!gameStarted){
+            gameStarted = true;
+        }
         velocityY = jumpPower;
     }
 }
 function tmoveBird() {
+    if(!gameStarted){
+        gameStarted= true;
+    }
     velocityY = jumpPower;
 }
 
 // Create pipe pair
 function placePipe() {
+    if (gameOver || !gameStarted) {
+        return;
+    }
+
     let randomPipeY = -pipeHeight / 4 - Math.random() * (pipeHeight / 2);
 
     let topPipe = {
@@ -182,5 +205,6 @@ function restartGame(){
         pipeArray = [];
         score = 0;
          gameOver = false;
+         gameStarted = false;
 }
     
