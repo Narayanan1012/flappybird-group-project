@@ -20,7 +20,7 @@ let bird = {
 };
 
 let velocityY = 0;
-let gravity = 0.25;
+let gravity = 0.32;
 let jumpPower = -6;
 
 // Pipes
@@ -116,7 +116,7 @@ function update() {
 
     for (let i = 0; i < pipeArray.length; i++) {
         let pipe = pipeArray[i];
-        pipe.x -= 2.5;
+        pipe.x -= 3.2;
         ctx.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
 
         //Collision Detection
